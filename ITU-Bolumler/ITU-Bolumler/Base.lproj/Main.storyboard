@@ -99,7 +99,19 @@
                             <constraint firstItem="Af4-oy-n0c" firstAttribute="top" secondItem="gbf-I5-Eqt" secondAttribute="bottom" id="qiP-EU-7ww"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" title="2022 ITU Bölüm Sıralamaları" id="MmG-Xo-AWu"/>
+                    <navigationItem key="navigationItem" title="2022 ITU Sıralamaları" id="MmG-Xo-AWu">
+                        <barButtonItem key="leftBarButtonItem" title="Sıfırla" id="QpR-Ot-aWF">
+                            <color key="tintColor" systemColor="systemRedColor"/>
+                            <connections>
+                                <action selector="resetButton:" destination="BYZ-38-t0r" id="nZD-xe-1u5"/>
+                            </connections>
+                        </barButtonItem>
+                        <barButtonItem key="rightBarButtonItem" title="Filtrele" id="9Pb-NH-FKf">
+                            <connections>
+                                <action selector="filter:" destination="BYZ-38-t0r" id="Pyg-Ys-uQQ"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <connections>
                         <outlet property="segmentedcontrol" destination="gbf-I5-Eqt" id="kff-0k-dRG"/>
                         <outlet property="tableView" destination="Af4-oy-n0c" id="sL3-l7-soA"/>
@@ -134,6 +146,9 @@
         </namedColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+        <systemColor name="systemRedColor">
+            <color red="1" green="0.23137254901960785" blue="0.18823529411764706" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>

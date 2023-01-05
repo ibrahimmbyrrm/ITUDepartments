@@ -7,11 +7,12 @@
 
 import UIKit
 
-class ViewController: UIViewController {
+class ViewController: UIViewController, UITextFieldDelegate{
 
     @IBOutlet weak var segmentedcontrol: UISegmentedControl!
     @IBOutlet weak var tableView: UITableView!
     var liste = [Bolumler]()
+    var siralama : Float?
     override func viewDidLoad() {
         super.viewDidLoad()
         tableView.delegate = self
@@ -48,6 +49,30 @@ class ViewController: UIViewController {
         }
         self.tableView.reloadData()
     }
+    @IBAction func filter(_ sender: Any) {
+        let alert1 = UIAlertController(title: "Sıralamanızı giriniz", message: "", preferredStyle: UIAlertController.Style.alert)
+        alert1.addTextField { (textfield : UITextField!) in
+            textfield.placeholder = "Siralamanizi araya nokta koyarak giriniz"
+            
+        }
+        let okButton = UIAlertAction(title: "Tamam", style: UIAlertAction.Style.default) { saveaction in
+            self.siralama = Float(alert1.textFields![0].text!)
+            self.liste = Bolumlerdao().filtrele(siralama: self.siralama!)
+            self.tableView.reloadData()
+            
+        }
+        alert1.addAction(okButton)
+        self.present(alert1, animated: true)
+        
+        
+    }
+    @IBAction func resetButton(_ sender: Any) {
+        if self.siralama != 0 {
+            self.segmentedcontrol.selectedSegmentIndex = 0
+            self.liste = Bolumlerdao().bolumleriAl()
+            self.tableView.reloadData()
+        }
+    }
     
     
     
@@ -66,5 +91,17 @@ extension ViewController : UITableViewDelegate,UITableViewDataSource {
         cell.bolumSiralama.text = String(liste[indexPath.row].bolum_siralama!)
         return cell
     }
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        alert()
+    }
 }
+extension ViewController {
+    func alert() {
+        let alert = UIAlertController(title: "Mükemmel bir bölüm", message: "Umarız ki istediğin bölümü kazanabilirsin.Daha fazla bilgi için İTÜ'nün yayınladığı dokümanları inceleyebilirsin", preferredStyle: UIAlertController.Style.alert)
+        let okButton = UIAlertAction(title: "Tamam", style: UIAlertAction.Style.default)
+        alert.addAction(okButton)
+        self.present(alert, animated: true)
+    }
+}
+
 
