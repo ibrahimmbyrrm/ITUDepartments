@@ -9,6 +9,10 @@ import UIKit
 
 class Cell: UITableViewCell {
 
+   
+    @IBOutlet weak var bolumSiralama: UILabel!
+    @IBOutlet weak var bolumDili: UILabel!
+    @IBOutlet weak var bolumAdi: UILabel!
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
