@@ -80,4 +80,36 @@ class Bolumlerdao {
         db?.close()
         return liste
     }
+    func filtreleTR(siralama : Float) -> [Bolumler] {
+        var liste = [Bolumler]()
+        db?.open()
+        do{
+            let rs = try db!.executeQuery("SELECT * FROM bolumler WHERE bolum_siralama >= ? AND bolum_dil = '%30 ING'", values: [siralama])
+            while(rs.next()) {
+                let bolum = Bolumler(bolum_id: Int(rs.string(forColumn: "bolum_id"))!, bolum_ad: rs.string(forColumn: "bolum_ad")!, bolum_siralama: Float(rs.string(forColumn: "bolum_siralama"))!, bolum_dil: rs.string(forColumn: "bolum_dil")!)
+                liste.append(bolum)
+            }
+        }
+        catch {
+            print(error.localizedDescription)
+        }
+        db?.close()
+        return liste
+    }
+    func filtreleING(siralama : Float) -> [Bolumler] {
+        var liste = [Bolumler]()
+        db?.open()
+        do{
+            let rs = try db!.executeQuery("SELECT * FROM bolumler WHERE bolum_siralama >= ? AND bolum_dil = 'ING'", values: [siralama])
+            while(rs.next()) {
+                let bolum = Bolumler(bolum_id: Int(rs.string(forColumn: "bolum_id"))!, bolum_ad: rs.string(forColumn: "bolum_ad")!, bolum_siralama: Float(rs.string(forColumn: "bolum_siralama"))!, bolum_dil: rs.string(forColumn: "bolum_dil")!)
+                liste.append(bolum)
+            }
+        }
+        catch {
+            print(error.localizedDescription)
+        }
+        db?.close()
+        return liste
+    }
 }

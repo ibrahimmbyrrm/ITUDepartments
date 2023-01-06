@@ -50,14 +50,21 @@ class ViewController: UIViewController, UITextFieldDelegate{
         self.tableView.reloadData()
     }
     @IBAction func filter(_ sender: Any) {
-        let alert1 = UIAlertController(title: "Sıralamanızı giriniz", message: "", preferredStyle: UIAlertController.Style.alert)
+        let alert1 = UIAlertController(title: "Sıralamanızı giriniz", message: "Sıralamanızı araya nokta koyarak giriniz.", preferredStyle: UIAlertController.Style.alert)
         alert1.addTextField { (textfield : UITextField!) in
-            textfield.placeholder = "Siralamanizi araya nokta koyarak giriniz"
+            textfield.placeholder = "Siralama"
             
         }
+        //Butona basıldığında hangi dil sekmesi seçiliyse o dildeki uygun bölümleri listeler.
         let okButton = UIAlertAction(title: "Tamam", style: UIAlertAction.Style.default) { saveaction in
             self.siralama = Float(alert1.textFields![0].text!)
-            self.liste = Bolumlerdao().filtrele(siralama: self.siralama!)
+            if self.segmentedcontrol.selectedSegmentIndex == 0 {
+                self.liste = Bolumlerdao().filtrele(siralama: self.siralama!)
+            }else if self.segmentedcontrol.selectedSegmentIndex == 1 {
+                self.liste = Bolumlerdao().filtreleING(siralama: self.siralama!)
+            }else if self.segmentedcontrol.selectedSegmentIndex == 2 {
+                self.liste = Bolumlerdao().filtreleTR(siralama: self.siralama!)
+            }
             self.tableView.reloadData()
             
         }
@@ -66,10 +73,16 @@ class ViewController: UIViewController, UITextFieldDelegate{
         
         
     }
+    //Filtreleme yaptığımız sıralamayı devre dışı bırakarak sıralama fark etmeksizin tüm bölümleri listeler.
     @IBAction func resetButton(_ sender: Any) {
         if self.siralama != 0 {
-            self.segmentedcontrol.selectedSegmentIndex = 0
-            self.liste = Bolumlerdao().bolumleriAl()
+            if self.segmentedcontrol.selectedSegmentIndex == 0 {
+                self.liste = Bolumlerdao().bolumleriAl()
+            }else if self.segmentedcontrol.selectedSegmentIndex == 1 {
+                self.liste = Bolumlerdao().ingBolumAl()
+            }else if self.segmentedcontrol.selectedSegmentIndex == 2 {
+                self.liste = Bolumlerdao().turkcebolumAl()
+            }
             self.tableView.reloadData()
         }
     }
